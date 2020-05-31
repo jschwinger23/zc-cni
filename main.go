@@ -70,5 +70,9 @@ func requestAddress(client clientv3.Interface, poolName string) (IP string, err 
 	if len(IPs) != 1 {
 		return "", fmt.Errorf("unexpected number of IPs")
 	}
-	return string(IPs[0].IP), nil
+
+	for _, seg := range IPs[0].IP {
+		IP += string(seg)
+	}
+	return
 }
