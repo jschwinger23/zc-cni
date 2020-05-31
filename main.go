@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/projectcalico/libcalico-go/lib/apiconfig"
 	"github.com/projectcalico/libcalico-go/lib/clientv3"
@@ -71,8 +73,9 @@ func requestAddress(client clientv3.Interface, poolName string) (IP string, err 
 		return "", fmt.Errorf("unexpected number of IPs")
 	}
 
+	segs := []string{}
 	for _, seg := range IPs[0].IP {
-		IP += string(seg)
+		segs = append(segs, strconv.Itoa(int(seg)))
 	}
-	return
+	return strings.Join(segs, "."), nil
 }
